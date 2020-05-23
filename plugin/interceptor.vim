@@ -4,7 +4,7 @@
 
 " just simple function 
 
-function! s:Interceptor()
+function! Interceptor()
 
   let line0=getline (".")
   let line=matchstr (line0, "http[^]\"\) ]*")
