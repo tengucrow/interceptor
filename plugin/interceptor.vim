@@ -22,4 +22,4 @@ function! s:Interceptor()
 
 endfunction
 
-nmap gx :call Interceptor()<CR>
+nnoremap gx :call Interceptor()<CR>
