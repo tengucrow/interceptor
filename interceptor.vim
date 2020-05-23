@@ -1,4 +1,10 @@
-function! Interceptor()
+" Vim replace for missed gx functionality from netrw
+" Maintainer:	Vik Voinikoff <policarpov2@gmail.com>
+" Last Change:  2020-05-24 01:12:53 	
+
+" just simple function 
+
+function! s:Interceptor()
 
   let line0=getline (".")
   let line=matchstr (line0, "http[^]\"\) ]*")
@@ -17,4 +23,3 @@ function! Interceptor()
 endfunction
 
 nmap gx :call Interceptor()<CR>
-nmap <F3> :call Interceptor()<CR>
