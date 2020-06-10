@@ -1,3 +1,9 @@
+" Vim replace for missed gx functionality from netrw
+" Maintainer:	Vik Voinikoff <policarpov2@gmail.com>
+" Last Change:  2020-05-24 01:12:53 	
+
+" just simple function 
+
 function! Interceptor()
 
   let line0=getline (".")
@@ -21,5 +27,4 @@ function! Interceptor()
 
 endfunction
 
-nmap gx :call Interceptor()<CR>
-nmap <F3> :call Interceptor()<CR>
+nnoremap <silent> gx :call Interceptor()<CR>
