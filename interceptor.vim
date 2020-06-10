@@ -11,6 +11,11 @@ function! Interceptor()
       let line=matchstr (line0, "file[^\"\) ]*")
   endif
 
+  " for opening e-mail adresses
+  if line==""
+      let line=matchstr (line0, "mailto:[^\"\) ]*")
+  endif
+
   let line= escape (line, "#?&;|%")
   exec ':silent !firefox ' . line
 
