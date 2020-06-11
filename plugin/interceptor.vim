@@ -7,7 +7,7 @@
 function! Interceptor()
 
   let line0=getline (".")
-  let line=matchstr (line0, "http[^]\"\) ]*")
+  let line=matchstr (line0, "http[^\"\) ]*")
 
   if line==""
       let line=matchstr (line0, "ftp[^\"\) ]*")
