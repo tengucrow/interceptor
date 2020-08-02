@@ -7,3 +7,7 @@ If you use minimalist Vim plugin manager [vim-plug](https://github.com/junegunn/
     Plug 'https://github.com/tengucrow/interceptor'
 
 and install it with `:PlugInstall`
+
+If you want to use other browser - now you can add to your `.vimrc` something like:
+
+    let g:InterceptorGxBrowser="x-www-browser"
