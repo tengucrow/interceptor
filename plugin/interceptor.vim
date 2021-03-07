@@ -4,14 +4,24 @@
 
 " just simple function 
 
+" global firefox setting
+" let g:InterceptorGxBrowser="x-www-browser"
+" in vimrc
+
 function! Interceptor()
 
-  " soft to open
-  let actor='firefox'
+    if exists("g:InterceptorGxBrowser")
+        let Brwsr=g:InterceptorGxBrowser
+    else
+        let Brwsr="firefox"
+        " or
+        " let l:browser="x-www-browser"
+    endif
+
 
   let line0=getline (".")
 
-  let line=matchstr (line0, "http[^\"\) ]*")
+  let line=matchstr(line0, "http[^\"\)\} ]*")
 
   if line==""
       let line=matchstr (line0, "ftp[^\"\) ]*")
@@ -19,7 +29,7 @@ function! Interceptor()
 
   if line==""
       let line=matchstr (line0, "file[^\"\) ]*")
-      let actor='thunar'
+      let Brwsr="thunar"
   endif
 
   " for opening e-mail adresses (cgosorio proposal)
@@ -27,8 +37,8 @@ function! Interceptor()
       let line=matchstr (line0, "mailto:[^\"\) ]*")
   endif
 
-  let line= escape (line, "#?&;|%")
-  exec ':silent !'.actor.' '.line
+  let line=escape (line, "#?&;|%")
+  exec ':silent !'.Brwsr.' '. line
 
 endfunction
 
