@@ -6,6 +6,9 @@
 
 function! Interceptor()
 
+  " soft to open
+  let actor='firefox'
+
   let line0=getline (".")
 
   let line=matchstr (line0, "http[^\"\) ]*")
@@ -16,6 +19,7 @@ function! Interceptor()
 
   if line==""
       let line=matchstr (line0, "file[^\"\) ]*")
+      let actor='thunar'
   endif
 
   " for opening e-mail adresses (cgosorio proposal)
@@ -24,7 +28,7 @@ function! Interceptor()
   endif
 
   let line= escape (line, "#?&;|%")
-  exec ':silent !firefox ' . line
+  exec ':silent !'.actor.' '.line
 
 endfunction
 
