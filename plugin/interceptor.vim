@@ -1,6 +1,6 @@
 " Vim replace for missed gx functionality from netrw
 " Maintainer:	Vik Voinikoff <policarpov2@gmail.com>
-" Last Change:  2020-06-10 14:29:39  
+" Last Change: 2021-03-08 09:12:17  
 
 " just simple function 
 
@@ -11,34 +11,57 @@
 function! Interceptor()
 
     if exists("g:InterceptorGxBrowser")
-        let Brwsr=g:InterceptorGxBrowser
+        let l:Brwsr = g:InterceptorGxBrowser
     else
-        let Brwsr="firefox"
+        let l:Brwsr = "firefox"
         " or
         " let l:browser="x-www-browser"
     endif
 
 
-  let line0=getline (".")
+    " get current line under cursor
+    let line = getline (".")
 
-  let line=matchstr(line0, "http[^\"\)\} ]*")
+    " get first test pattern (url http:// or https://)
+    let l:www = matchstr(line, "http[^\"\)\} ]*")
 
-  if line==""
-      let line=matchstr (line0, "ftp[^\"\) ]*")
-  endif
+    " if we found url: 
+    if l:www != "" 
+        let l:url = escape(www, "#?&;|%")
 
-  if line==""
-      let line=matchstr (line0, "file[^\"\) ]*")
-      let Brwsr="thunar"
-  endif
+    elseif matchstr(line, "file[^\"\) ]*") != ""
+        let l:f = matchstr(line, "file[^\"\) ]*")
+        let l:url = escape(f, "#?&;|%")
+        let l:Brwsr = "xdg-open"
 
-  " for opening e-mail adresses (cgosorio proposal)
-  if line==""
-      let line=matchstr (line0, "mailto:[^\"\) ]*")
-  endif
+    elseif    matchstr(line, "\/home\/[^\"\)\} ]*") != ""
+        let l:f = matchstr(line, "\/home\/[^\"\\} ]*")
+        let l:url = escape(f, "#?&;|%")
+        let l:Brwsr = "xdg-open"
 
-  let line=escape (line, "#?&;|%")
-  exec ':silent !'.Brwsr.' '. line
+
+    elseif matchstr (line, "ftp[^\"\) ]*") != ""
+
+        let l:ftp = matchstr(line, "ftp[^\"\) ]*")
+        let l:url = escape(ftp, "#?&;|%")
+
+    " for opening e-mail adresses (cgosorio proposal)
+    elseif        matchstr(line, "mailto:[^\"\) ]*") != ""
+        let l:m = matchstr(line, "mailto:[^\"\) ]*")
+        let l:url = escape(l:m, "#?&;|%")
+
+    "buggy and problem branch :(
+    "elseif   matchstr(line,  "\~\/\S*") != ""
+    "    let l:f = matchstr(line, "\~\/\S*")
+    "    let l:url = escape(f, "#?&;|%")
+    "    let l:Brwsr = "xdg-open"
+
+    endif
+
+    if url != ""
+        exec ':silent !' . Brwsr . ' ' . url
+    endif
+
 
 endfunction
 
